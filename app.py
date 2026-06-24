@@ -13,10 +13,10 @@ st.markdown(
     .question-box { font-size: 48px !important; font-weight: bold; text-align: center; margin: 20px 0; color: #2E7D32; }
     </style>
     """,
-    unsafe_style_allowed=True,
+    unsafe_allow_html=True,
 )
 
-st.markdown("<div class='big-title'>✨ Math Wizards! ✨</div>", unsafe_style_allowed=True)
+st.markdown("<div class='big-title'>✨ Math Wizards! ✨</div>", unsafe_allow_html=True)
 st.write("### Can you solve the mystery math puzzles? Let's find out!")
 st.write("---")
 
@@ -44,14 +44,11 @@ def next_question():
     else:
         st.session_state.num1 = random.randint(0, 10)
         st.session_state.num2 = random.randint(0, st.session_state.num1)
-    # Clear the text input field by resetting its key if needed, or letting form handling take care of it
-    if "user_answer" in st.session_state:
-        st.session_state.user_answer = ""
 
 # --- Display Score ---
 st.markdown(
     f"<div class='score-box'>🏆 Score: {st.session_state.score} / {st.session_state.total_questions}</div>",
-    unsafe_style_allowed=True,
+    unsafe_allow_html=True,
 )
 
 # --- Display Current Question ---
@@ -59,10 +56,9 @@ n1 = st.session_state.num1
 n2 = st.session_state.num2
 op = st.session_state.operation
 
-st.markdown(f"<div class='question-box'>{n1} {op} {n2} = ?</div>", unsafe_style_allowed=True)
+st.markdown(f"<div class='question-box'>{n1} {op} {n2} = ?</div>", unsafe_allow_html=True)
 
 # --- Answer Form ---
-# Using a form so pressing "Enter" or clicking "Submit" handles the logic neatly
 with st.form(key="math_form", clear_on_submit=True):
     user_input = st.number_input("Type your answer here:", min_value=0, max_value=20, step=1, format="%d")
     submit_button = st.form_submit_button(label="Submit Answer! 🚀")
@@ -73,10 +69,8 @@ if submit_button:
     # Calculate correct answer
     if op == "+":
         correct_answer = n1 + n2
-        explanation_visual = "🍎" * n1 + "  +  " + "🍎" * n2
     else:
         correct_answer = n1 - n2
-        explanation_visual = "🍏" * n1 + f" (take away {n2})"
 
     # Check Answer
     if user_input == correct_answer:
